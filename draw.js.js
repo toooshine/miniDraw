@@ -1,4 +1,4 @@
-// var readline = require("readline-sync");
+ var readline = require("readline-sync");
 
 // const animals=[
 //     ['^__^','(oo)\\_______','(__)\\       )\\/\\','    ||----w |','    ||     ||'],
@@ -80,17 +80,54 @@
 
 //Draw isosceles triangle:
 
-const height = 10;
-const drawTriangleByRows = [];
+// const height = 10;
+// const drawTriangleByRows = [];
 
-for (i = 0; i < height; i++) {
-    for (j = 0; j < height + i ; j++) {
-        if (j < (height - 1 -i)) {
-            drawTriangleByRows.push(' '+' '+' ')
-        } else {
-            drawTriangleByRows.push(' '+'*'+' ')
-        }
-    }
-    console.log(drawTriangleByRows.join(''));
-    drawTriangleByRows.splice('');
+// for (i = 0; i < height; i++) {
+//     for (j = 0; j < height + i ; j++) {
+//         if (j < (height - 1 -i)) {
+//             drawTriangleByRows.push(' '+' '+' ')
+//         } else {
+//             drawTriangleByRows.push(' '+'*'+' ')
+//         }
+//     }
+//     console.log(drawTriangleByRows.join(''));
+//     drawTriangleByRows.splice('');
+// }
+
+// ----------------------------------------------------------------------------------------------------------------------
+// The goal is to encrypt a message using Caesar encryption with an interval
+// Cesar Code :
+
+let txt = "Hello World !";
+const interval = 3;
+
+const accents = "àâéèêîôùç";
+const vowelsFrench = "aaeeeiouc"
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+let text = [...txt.toLowerCase()].map(c => accents.includes(c) ? vowelsFrench[accents.indexOf(c)] : c)
+    .join('')
+    .replace(/[^a-z]/g, '')
+    .toLocaleUpperCase();
+
+const cesarCode = (c, interval) => {
+    return (
+        alphabet[(interval + alphabet.indexOf(c) + 26 ) % 26]
+    )
 }
+
+const cesardecode = (c, interval) => {
+    return (
+        alphabet[(alphabet.indexOf(c) - interval + 26) % 26]
+    )
+}
+
+const code = (text, interval) => [...text].map(c => cesarCode(c, interval)).join('');
+const codedText = code(text, interval);
+
+const decode = (codedText, interval) => [...codedText].map(c => cesardecode(c, interval)).join('');
+const decodedText = decode(codedText, interval);
+
+console.log(codedText);
+console.log(decodedText);
